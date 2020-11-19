@@ -15,6 +15,16 @@ Live Demo
 ======
 [https://confident-kilby-f1fa10.netlify.app/](https://confident-kilby-f1fa10.netlify.app/)
 
+Personal Contributions
+======
+- Landing page
+- Round timer and logic 
+- Game end and replay logic
+- Grid and question mapping
+- View changes between components
+- Transition Screens (Double Jeopardy, Final Jeopardy, Game Over)
+- Mobile Responsiveness
+
 Features
 =======
 - As a user, When the page loads a landing page asking if I want to play
