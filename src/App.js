@@ -36,7 +36,7 @@ function App() {
   const [roundTimer, setRoundTimer] = useState(-1)
   const [maxBet, setMaxBet] = useState(0);
   const [questionCounter, setQuestionCounter] = useState(0)
-  const roundLength = 30;
+  const roundLength = 60;
 
 
   const setEndView = useCallback(() => {
