@@ -58,13 +58,13 @@ const QuestionCard = (props) => {
   // eslint-disable-next-line
   const [answers, setAnswers] = React.useState(shuffleArray([
     <Button key={1} onClick={correctAnswer} variant="contained">
-      <h3 dangerouslySetInnerHTML={{__html: clue.answer}}/>
+      <h3>{clue.answer}</h3>
     </Button>,
     <Button key={2} onClick={wrongAnswer} variant="contained">
-      <h3 dangerouslySetInnerHTML={{__html: randomAnswers && randomAnswers[0]}}/>
+      <h3>{randomAnswers[0]}</h3>
     </Button>,
     <Button key={3} onClick={wrongAnswer} variant="contained">
-      <h3 dangerouslySetInnerHTML={{__html: randomAnswers[1]}}/>
+      <h3>{randomAnswers[1]}</h3>
     </Button>,
   ])
 )
