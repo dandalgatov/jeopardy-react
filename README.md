@@ -13,7 +13,7 @@ Participants
 
 Live Demo
 ======
-[https://confident-kilby-f1fa10.netlify.app/](https://confident-kilby-f1fa10.netlify.app/)
+[https://jeopardy-fan-edition.vercel.app/](https://jeopardy-fan-edition.vercel.app/)
 
 Personal Contributions
 ======
