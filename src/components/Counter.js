@@ -2,13 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 const Track = styled.div`
-  height: 20px;
+  height: 2rem;
   margin: 0 auto;
   background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
 `;
 
 const Thumb = styled.div`
-  width: ${100 / 11}%;
+  width: ${100 / 9}%;
+  @media (max-width: 768px) {
+    width: ${100 / 13}%;
+  }
   height: 100%;
   background-color: #cc1414;
   transition: width 0.3s ease-in;
@@ -18,10 +23,8 @@ const Thumb = styled.div`
 
 const Counter = (props) => {
   const { setView, wrongAnswer, round } = props ;
-  //Seconds Counter
-  const [counter, setCounter] = React.useState(10); // counter is 11 seconds
-  // const [percentage, setPercentage] = React.useState(0);
-
+  //ten seconds is counted before the question is skipped
+  const [counter, setCounter] = React.useState(11);
 
   const [thumbs, setThumbs] = React.useState(
     [
@@ -34,14 +37,15 @@ const Counter = (props) => {
       <Thumb key={6}/>,
       <Thumb key={7}/>,
       <Thumb key={8}/>,
-      <Thumb key={9} />,
+      //<Thumb key={9} />,
     ]
   );
 
   React.useEffect(() => {
-    if (counter <= 0 && round === 3) {
+    if (counter <= 1 && round === 3) {
       wrongAnswer();
-    } else if (counter <= 0) {
+    } else if (counter <= 1) {
+      document.getElementById("wrong-sound").play();
       setView("grid");
     }
   },[counter, round, setView, wrongAnswer])
@@ -49,7 +53,10 @@ const Counter = (props) => {
   React.useEffect(() => {
     const timer = setInterval(() => {
         setCounter(counter - 1);
-        setThumbs(thumbs.slice(0, thumbs.length-1));
+        if(counter%2===0){
+          setThumbs(thumbs.slice(0, thumbs.length - 2));
+        }
+
       }, 1000);
 
     return () => clearInterval(timer);
@@ -58,7 +65,6 @@ const Counter = (props) => {
   return (
     <>
       <Track
-        style={{ display: "flex", justifyContent: "center", height: "2rem" }}
       >
         {thumbs}
       </Track>

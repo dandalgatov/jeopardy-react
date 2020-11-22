@@ -23,6 +23,7 @@
   height: 7vh;
   background:inherit;
   font-size: 2rem;
+  position:fixed;
 }
 .logo{
   font-size: 2rem !important;

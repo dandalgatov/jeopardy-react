@@ -1,12 +1,14 @@
+import React from 'react'
 import { Box, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   main: {
     border: "2px solid black",
-    flexGrow: 1,
     minHeight: "500px",
-    paddingTop:'7vh',
+    [theme.breakpoints.down('sm')]: {
+      height: '100%'
+    }
   },
   item: {
     fontFamily: "Swiss911",
@@ -19,8 +21,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     backgroundColor: "#060CE9",
     "-webkit-text-stroke": ".5px black",
+  },
+  select:{
     '&:hover': {
-       background: "#090DA0",
+      background: "#090DA0",
     },
   },
   title: {
@@ -29,13 +33,22 @@ const useStyles = makeStyles((theme) => ({
   question: {
     color: "#FFFF00",
   },
+  [theme.breakpoints.down('md')]: {
+    main:{
+      paddingTop: '7vh',
+    }
+  },
 }));
 
 export default function JeopardyGrid(props) {
   const { board, itemClick, round } = props || [];
   const classes = useStyles();
+
+
+
   return (
-    <Grid container direction="row" className={`classes.main`}>
+    <Grid container direction="row" className={classes.main}>
+
       {board &&
         board[round-1].map((column, index) => {
           const notTaken = props.history[index];
@@ -46,7 +59,7 @@ export default function JeopardyGrid(props) {
                 <h3>{column.title}</h3>
               </Box>
               <Box
-                className={`${classes.item} ${classes.question}`}
+                className={`${classes.item} ${classes.select} ${classes.question}`}
                 onClick={() => {
                   if (notTaken[0]) itemClick(index, 0, 200 * round);
                 }}
@@ -54,7 +67,7 @@ export default function JeopardyGrid(props) {
                 {notTaken[0] && <h2>${200*round}</h2>}
               </Box>
               <Box
-                className={`${classes.item} ${classes.question}`}
+                className={`${classes.item} ${classes.select} ${classes.question}`}
                 onClick={() => {
                   if (notTaken[1]) itemClick(index, 1, 400 * round);
                 }}
@@ -62,7 +75,7 @@ export default function JeopardyGrid(props) {
                 {notTaken[1] && <h2>${400 * round}</h2>}
               </Box>
               <Box
-                className={`${classes.item} ${classes.question}`}
+                className={`${classes.item} ${classes.select} ${classes.question}`}
                 onClick={() => {
                   if (notTaken[2]) itemClick(index, 2, 600 * round);
                 }}
@@ -70,7 +83,7 @@ export default function JeopardyGrid(props) {
                 {notTaken[2] && <h2>${600 * round}</h2>}
               </Box>
               <Box
-                className={`${classes.item} ${classes.question}`}
+                className={`${classes.item} ${classes.select} ${classes.question}`}
                 onClick={() => {
                   if (notTaken[3]) itemClick(index, 3, 800 * round);
                 }}
@@ -78,7 +91,7 @@ export default function JeopardyGrid(props) {
                 {notTaken[3] && <h2>${800 * round}</h2>}
               </Box>
               <Box
-                className={`${classes.item} ${classes.question}`}
+                className={`${classes.item} ${classes.select} ${classes.question}`}
                 onClick={() => {
                   if (notTaken[4]) itemClick(index, 4, 1000 * round);
                 }}

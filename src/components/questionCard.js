@@ -3,11 +3,12 @@ import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Counter from "./Counter";
-import styled from "styled-components";
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    // marginTop: '8vh',
+    [theme.breakpoints.down('md')]: {
+        paddingTop: '7vh',
+    },
     fontFamily: "KorinnaBold",
     alignItems: "center",
     justifyContent: "center",
@@ -22,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
   },
   question: {
     height: "60vh",
+    [theme.breakpoints.down('md')]: {
+      height: "50vh",
+    },
     width: "80%",
     alignItems: "center",
     justifyContent: "center",
@@ -29,26 +33,27 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: "column nowrap",
   },
   answerRow: {
-    height: "150px",
-    alignItems: "center",
+    height: "24vh",
+    width: "100%",
     display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      height: "40vh",
+    },
+  },
+  answer:{
+    [theme.breakpoints.down('md')]: {
+      margin: '0 1rem'
+    },
   },
   countdown: {
-    height: "2rem",
-    // width: "80vw",
+    width: '100vw',
     margin: "auto",
-    // paddingTop: "5vh",
-    paddingBottom: "5vh"
-
   },
 }));
 
-//Styling Counter bar
-
-const CounterBarContainer = styled.div`
-  width: 100vw;
-  margin: 0 auto;
-`;
 
 const QuestionCard = (props) => {
   const { clue, correctAnswer, wrongAnswer, randomAnswers, shuffleArray, setView, round} = props;
@@ -57,14 +62,14 @@ const QuestionCard = (props) => {
 
   // eslint-disable-next-line
   const [answers, setAnswers] = React.useState(shuffleArray([
-    <Button key={1} onClick={correctAnswer} variant="contained">
-      <h3>{clue.answer}</h3>
+    <Button  className = {classes.answer} key={1} onClick={correctAnswer} variant="contained">
+      <h3 dangerouslySetInnerHTML={{__html: clue.answer}}/>
     </Button>,
-    <Button key={2} onClick={wrongAnswer} variant="contained">
-      <h3>{randomAnswers[0]}</h3>
+    <Button className={classes.answer} key={2} onClick={wrongAnswer} variant="contained">
+      <h3 dangerouslySetInnerHTML={{__html: randomAnswers && randomAnswers[0]}}/>
     </Button>,
-    <Button key={3} onClick={wrongAnswer} variant="contained">
-      <h3>{randomAnswers[1]}</h3>
+    <Button className={classes.answer} key={3} onClick={wrongAnswer} variant="contained">
+      <h3 dangerouslySetInnerHTML={{__html: randomAnswers[1]}}/>
     </Button>,
   ])
 )
@@ -72,24 +77,14 @@ const QuestionCard = (props) => {
   return (
     <Box className={classes.main}>
       <Box className={classes.countdown}>
-        <CounterBarContainer>
           <Counter wrongAnswer={wrongAnswer} setView={setView} round={round}/>
-        </CounterBarContainer>
       </Box>
       <Box className={`${classes.question}`}>
         <h1>{clue.question}</h1>
       </Box>
       <div
-        style={{
-          height: "24vh",
-          width: "100%",
-          display: "flex",
-          flexflow: "row wrap",
-          justifyContent: "space-around",
-          alignItems: "flex-start",
-        }}
+        className={classes.answerRow}
       >
-
         {answers}
       </div>
     </Box>

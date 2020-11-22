@@ -1,5 +1,7 @@
+import React from 'react'
 import { Box, Container, Button, Grid,  makeStyles } from '@material-ui/core';
 import alexTrebek from '../public/images/alex_trebek_clean.png'
+import jeopardyIntro from '../public/audio/jeopardy-intro.mp3'
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -56,9 +58,15 @@ const useStyles = makeStyles(theme => ({
 export default function LandingPage(props) {
   const classes = useStyles();
 
+  React.useEffect(() => {
+    var audio = document.getElementById('jeopardy-intro')
+    audio.volume = .3
+    audio.play()
+  }, [])
+
   return (
     <Box className={`${classes.main}`} >
-
+        <audio id="jeopardy-intro" src={jeopardyIntro}></audio>
         <Box className={`${classes.title} logo`} >
           <h1>Jeopardy!</h1>
         </Box>
@@ -70,7 +78,7 @@ export default function LandingPage(props) {
         <Grid item md={4} sm={12}>
           <Container>
             <h2><u>Rules</u></h2>
-            <h3>1. To start the game, press the start button.</h3>
+            <h3>1. To start the game, press the PLAY button.</h3>
             <h3>2. Select any tile from a corresponding category on the screen.</h3>
             <h3>3. There will be a question with multiple answer choices.</h3>
             <h3>4. If answered correctly, your score will increase and incorrect answers will detract from your score.</h3>

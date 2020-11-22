@@ -16,7 +16,7 @@ import EndGame from './components/endGame'
 
 function App() {
   const [board, setBoard] = useState()
-  const [boardOffset, setBoardOffset] = useState(1)
+  const [boardOffset, setBoardOffset] = useState(Math.random() * 1000)
   const [view, setView] = useState('landing')
   const [round, setRound] = useState(1)
   const [col, setColumn] = useState()
@@ -36,7 +36,7 @@ function App() {
   const [roundTimer, setRoundTimer] = useState(-1)
   const [maxBet, setMaxBet] = useState(0);
   const [questionCounter, setQuestionCounter] = useState(0)
-  const roundLength = 60;
+  const roundLength = 120;
 
 
   const setEndView = useCallback(() => {
@@ -183,7 +183,7 @@ function App() {
 
   const reduceWrongAnswers = () =>{
     setRandomAnswers((prevAnswers)=>{
-      prevAnswers.pop()
+      shuffleArray(prevAnswers)
       return [...prevAnswers]
     })
   }
@@ -202,6 +202,8 @@ function App() {
     )
 
     if (view === 'question'){
+      console.log('column', col,'row', row)
+      console.log("clue",board[round - 1][col].clues[row])
       return (
         <QuestionCard
         round={round}

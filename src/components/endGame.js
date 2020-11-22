@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-
+import jeopardyMusic from '../public/audio/jeopardy-music.mp3'
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -58,18 +58,23 @@ const EndCard = (props) => {
     } else {
       return (
         <>
-          <h2>Congratulations!</h2>
-          <h3>You completed Jeopardy with a score of {score}.</h3>
+          <h1>Congratulations!</h1>
+          <h2>You completed Jeopardy with a score of {score}.</h2>
         </>
       )
     }
   }
 
-
+  React.useEffect(() => {
+    var audio = document.getElementById('jeopardy-music')
+    audio.volume = .3
+    audio.play()
+  }, [])
 
 
   return (
     <Box className={`${classes.full} ${classes.main}`}>
+      <audio id="jeopardy-music" src={jeopardyMusic}></audio>
       <Box className={`${classes.statement} ${classes.main}`}>
         {renderEndText()}
         <Button className={classes.button}
