@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Container, Button, Grid,  makeStyles } from '@material-ui/core';
+import { Box, Container, Button, Grid, makeStyles, FormControl, FormControlLabel, Radio, RadioGroup, FormLabel, Typography } from '@material-ui/core';
 import alexTrebek from '../public/images/alex_trebek_clean.png'
 import jeopardyIntro from '../public/audio/jeopardy-intro.mp3'
 
@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: 'column',
     width: '100%',
-    height: '100vh',
+    height: '80vh',
     color: '#FFFFFF',
     "-webkit-text-stroke": '1px black',
     fontWeight: 'bold',
@@ -38,13 +38,17 @@ const useStyles = makeStyles(theme => ({
       flexDirection:'column-reverse'
     }
   },
+  bigFont: {
+  fontSize: '1.4rem'
+},
   button: {
     fontFamily: 'Swiss911',
     border:'1px solid black',
     backgroundColor: '#FFFFFF',
-    fontSize:'1.5rem',
     "-webkit-text-stroke": '0px',
+    marginTop:"1rem",
     width:'30%',
+    fontSize: '2.5rem',
     '&:hover':{
       backgroundColor: "#060CE9",
       color:'#FFFFFF',
@@ -58,20 +62,24 @@ const useStyles = makeStyles(theme => ({
 export default function LandingPage(props) {
   const classes = useStyles();
 
-  React.useEffect(() => {
-    var audio = document.getElementById('jeopardy-intro')
+  const play = () => {
+    const audio = document.getElementById('jeopardy-intro')
     audio.volume = .3
     audio.play()
-  }, [])
+  }
+
+  React.useEffect(()=>{
+    play()
+  },[])
 
   return (
     <Box className={`${classes.main}`} >
         <audio id="jeopardy-intro" src={jeopardyIntro}></audio>
-        <Box className={`${classes.title} logo`} >
+        <Box onClick={play} className={`${classes.title} logo`} >
           <h1>Jeopardy!</h1>
         </Box>
       <Grid container className={classes.bottomRow} >
-        <Grid item md={4} sm={12} className={classes.imageContainer}>
+        <Grid onClick={play} item md={4} sm={12} className={classes.imageContainer}>
           <h3><i>Remembering Alex Trebek.</i></h3>
           <img className={classes.alex} src={alexTrebek} alt='Alex Trebek'></img>
         </Grid>
@@ -85,10 +93,29 @@ export default function LandingPage(props) {
           </Container>
         </Grid>
         <Grid item md={4} sm={12}>
+          <FormControl >
+            <h2>Difficulty</h2>
+            <RadioGroup row aria-label="difficulty" name="difficulty" defaultValue="easy">
+              <FormControlLabel
+                value="easy"
+                control={<Radio color='#FFFFFF' />}
+                label={<Typography className={classes.bigFont}>Easy</Typography>}
+                classes={classes.bigFont}
+                onClick={()=>props.setHard(false)}
+              />
+              <FormControlLabel
+              value="hard"
+              control={<Radio color='#FFFFFF' />}
+                label={<Typography className={classes.bigFont}>Hard</Typography>}
+              onClick={() => props.setHard(true)}
+                 />
+            </RadioGroup>
+          </FormControl>
+          <br></br>
           <Button size="large" className={classes.button}
             onClick={() => {props.setView('grid'); props.start();}}
           >
-            <h1>Play</h1>
+            Play
           </Button>
           <Container>
             <h2>Made By: <br></br>

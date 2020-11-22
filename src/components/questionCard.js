@@ -6,7 +6,7 @@ import Counter from "./Counter";
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
         paddingTop: '7vh',
     },
     fontFamily: "KorinnaBold",
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const QuestionCard = (props) => {
-  const { clue, correctAnswer, wrongAnswer, randomAnswers, shuffleArray, setView, round} = props;
+  const { clue, correctAnswer, wrongAnswer, randomAnswers, shuffleArray, setView, round, hard} = props;
   const classes = useStyles();
 
 
@@ -77,7 +77,7 @@ const QuestionCard = (props) => {
   return (
     <Box className={classes.main}>
       <Box className={classes.countdown}>
-          <Counter wrongAnswer={wrongAnswer} setView={setView} round={round}/>
+          <Counter hard={hard} wrongAnswer={wrongAnswer} setView={setView} round={round}/>
       </Box>
       <Box className={`${classes.question}`}>
         <h1>{clue.question}</h1>

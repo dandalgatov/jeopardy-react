@@ -22,9 +22,10 @@ const Thumb = styled.div`
 `;
 
 const Counter = (props) => {
-  const { setView, wrongAnswer, round } = props ;
+  const { setView, wrongAnswer, round, hard } = props ;
   //ten seconds is counted before the question is skipped
-  const [counter, setCounter] = React.useState(11);
+
+  const [counter, setCounter] = React.useState(hard?21:11);
 
   const [thumbs, setThumbs] = React.useState(
     [
@@ -53,9 +54,16 @@ const Counter = (props) => {
   React.useEffect(() => {
     const timer = setInterval(() => {
         setCounter(counter - 1);
-        if(counter%2===0){
-          setThumbs(thumbs.slice(0, thumbs.length - 2));
+        if(hard){
+          if (counter % 4 === 0) {
+            setThumbs(thumbs.slice(0, thumbs.length - 2));
+          }
+        }else{
+          if (counter % 2 === 0) {
+            setThumbs(thumbs.slice(0, thumbs.length - 2));
+          }
         }
+
 
       }, 1000);
 

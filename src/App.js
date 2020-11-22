@@ -12,7 +12,7 @@ import maxBetService from './services/maxBet'
 import correctNotification from "./public/audio/rightanswer.mp3";
 import wrongNotification from "./public/audio/wrong-answer.mp3";
 import EndGame from './components/endGame'
-
+import DailyDouble from './public/audio/daily-double.mp3';
 
 function App() {
   const [board, setBoard] = useState()
@@ -36,7 +36,8 @@ function App() {
   const [roundTimer, setRoundTimer] = useState(-1)
   const [maxBet, setMaxBet] = useState(0);
   const [questionCounter, setQuestionCounter] = useState(0)
-  const roundLength = 120;
+  const [hard, setHard]= useState(false);
+  const [roundLength, setRoundLength] = useState(150); //time of round 1 and 2 in seconds
 
 
   const setEndView = useCallback(() => {
@@ -55,7 +56,7 @@ function App() {
     if (round === 1) {
       setDailyDouble([[Math.floor(Math.random() * 6), Math.floor(Math.random() * 5)], [Math.floor(Math.random() * 6), Math.floor(Math.random() * 5)]])
       setView("secondRound")
-      setRoundTimer(roundLength)//time second round
+      setRoundTimer(roundLength)
       setRound(2)
       setQuestionCounter(0)
       setHistory([
@@ -77,13 +78,7 @@ function App() {
     }
   }, [round, setEndView])
 
-
-  useEffect(() => {
-    if(questionCounter===30){
-      nextRound()
-    }
-  },[questionCounter, nextRound]);
-
+  //gets new answers and questions when the board is set
   useEffect(() => {
     createBoard(setBoard, boardOffset);
     async function getWrongAnswers() {
@@ -92,9 +87,16 @@ function App() {
     getWrongAnswers();
   }, [boardOffset]);
 
+  //progresses next round when all questions on grid are answered
+  useEffect(() => {
+    if(questionCounter===30){
+      nextRound()
+    }
+  },[questionCounter, nextRound]);
+
+  //counts down the round timer
   useEffect(()=>{
     const countdown = setInterval(()=>{
-
 
       setRoundTimer(roundTimer-1)
       if(roundTimer===0){
@@ -105,8 +107,7 @@ function App() {
     return ()=>clearInterval(countdown);
   })
 
-
-
+  //handles what happens when a question is selected from the grid
   const itemClick = (col, row, value) => {
     setColumn(col)
     setRow(row)
@@ -124,6 +125,7 @@ function App() {
     }
   }
 
+  //if the user clicks the play again button at the end
   const reset = () => {
     setBoardOffset(boardOffset + 13)
     createBoard(setBoard, boardOffset + 13);
@@ -143,12 +145,17 @@ function App() {
     ]);
   }
 
+  //shuffles random answers on easy
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+  }
+
+  const handleFreeAnswer= (answer) => {
+
   }
 
   const correctAnswer = () => {
@@ -190,7 +197,7 @@ function App() {
 
   const renderMain = () => {
     if (view === "landing") {
-      return <LandingPage setView={setView} start={() => setRoundTimer(roundLength)}/>;
+      return <LandingPage setHard={setHard} setView={setView} start={() => setRoundTimer(roundLength)}/>;
     }
 
     if (view === 'grid') return (
@@ -202,8 +209,8 @@ function App() {
     )
 
     if (view === 'question'){
-      console.log('column', col,'row', row)
-      console.log("clue",board[round - 1][col].clues[row])
+      // console.log('column', col,'row', row)
+      // console.log("clue",board[round - 1][col].clues[row])
       return (
         <QuestionCard
         round={round}
@@ -216,9 +223,13 @@ function App() {
         randomAnswers={[randomAnswers[randomAnswers.length - 1], randomAnswers[randomAnswers.length-2]]}
       />
     )}
-    if (view==='dailyDouble') return (
+    if (view==='dailyDouble'){
+      const dailyDoubleSound = document.getElementById("daily-double")
+      dailyDoubleSound.volume=.3
+      dailyDoubleSound.play()
+       return (
       <AnnouncementPage text="Daily Double!" setView={setView} next='wager' time={2}/>
-    )
+    )}
     if (view === 'secondRound') return (
       <AnnouncementPage text="Double Jeopardy!" setView={setView} next='grid' time={2} />
     )
@@ -251,15 +262,11 @@ function App() {
     <div className="App ">
       <div
         className="gradient-background"
-        style={{
-          display: "flex",
-          flexFlow: "column nowrap",
-          alignContent: "flex-end",
-        }}
       >
         <>
           <audio id="correct-sound" src={correctNotification}></audio>
           <audio id="wrong-sound" src={wrongNotification}></audio>
+          <audio id="daily-double" src={DailyDouble}></audio>
         </>
         <Header bank={bank} setBank={setBank} />
         {renderMain()}

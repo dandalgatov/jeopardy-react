@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   question: {
     color: "#FFFF00",
   },
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('sm')]: {
     main:{
       paddingTop: '7vh',
     }
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function JeopardyGrid(props) {
-  const { board, itemClick, round } = props || [];
+  const { board, itemClick, round, } = props || [];
   const classes = useStyles();
 
 
