@@ -1,7 +1,6 @@
 import React from "react";
-import { Box } from "@material-ui/core";
+import { Box, Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Counter from "./Counter";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100vw',
     margin: "auto",
   },
+  bigFont: {
+    fontSize: '1.4rem'
+  },
 }));
 
 
@@ -74,6 +76,20 @@ const QuestionCard = (props) => {
   ])
 )
 
+  const freeAnswer = (
+    <>
+      <form>
+        <TextField label="Your Answer" variant="outlined"
+          InputProps={{
+            classes: {
+              input: classes.bigFont,
+            },
+          }}
+        />
+        <Button> Submit </Button>
+      </form>
+    </>)
+
   return (
     <Box className={classes.main}>
       <Box className={classes.countdown}>
@@ -85,7 +101,8 @@ const QuestionCard = (props) => {
       <div
         className={classes.answerRow}
       >
-        {answers}
+        {!hard && answers}
+        {hard && freeAnswer}
       </div>
     </Box>
   );

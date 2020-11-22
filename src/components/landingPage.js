@@ -38,9 +38,6 @@ const useStyles = makeStyles(theme => ({
       flexDirection:'column-reverse'
     }
   },
-  bigFont: {
-  fontSize: '1.4rem'
-},
   button: {
     fontFamily: 'Swiss911',
     border:'1px solid black',

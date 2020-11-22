@@ -163,7 +163,7 @@ function App() {
     setQuestionCounter(questionCounter + 1)
     setTimeout(() => {
       setBank(bank + questionValue);
-    }, 500);
+    }, 200);
     reduceWrongAnswers()
     if (round===3){
       setView('win')
@@ -177,7 +177,7 @@ function App() {
     setQuestionCounter(questionCounter+1)
     setTimeout(() => {
       setBank(bank - questionValue);
-    }, 500);
+    }, 200);
     reduceWrongAnswers()
     if (round === 3 && bank - questionValue <= 0) {
       setView('gameOver')
@@ -221,6 +221,7 @@ function App() {
         shuffleArray={shuffleArray}
         wrongAnswer={wrongAnswer}
         randomAnswers={[randomAnswers[randomAnswers.length - 1], randomAnswers[randomAnswers.length-2]]}
+        hard={hard}
       />
     )}
     if (view==='dailyDouble'){
