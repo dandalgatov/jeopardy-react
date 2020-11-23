@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const QuestionCard = (props) => {
-  const { clue, correctAnswer, wrongAnswer, randomAnswers, shuffleArray, setView, round, hard} = props;
+  const { clue, correctAnswer, wrongAnswer, randomAnswers, shuffleArray, setView, round, hard} = props || "";
   const classes = useStyles();
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Container, Button, Grid, makeStyles, FormControl, FormControlLabel, Radio, RadioGroup, FormLabel, Typography } from '@material-ui/core';
+import { Box, Container, Button, Grid, makeStyles, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@material-ui/core';
 import alexTrebek from '../public/images/alex_trebek_clean.png'
 import jeopardyIntro from '../public/audio/jeopardy-intro.mp3'
 

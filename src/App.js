@@ -76,7 +76,7 @@ function App() {
       setEndView()
     }
     }
-  }, [round, setEndView])
+  }, [round, setEndView, roundLength])
 
   //gets new answers and questions when the board is set
   useEffect(() => {
@@ -106,7 +106,14 @@ function App() {
     },1000)
     return ()=>clearInterval(countdown);
   })
-
+//more time allocated for hard difficulty
+  useEffect(()=>{
+    if(hard){
+      setRoundLength(180)
+    } else{
+      setRoundLength(150)
+    }
+  },[hard])
   //handles what happens when a question is selected from the grid
   const itemClick = (col, row, value) => {
     setColumn(col)
