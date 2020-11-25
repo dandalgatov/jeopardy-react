@@ -37,7 +37,7 @@ const Counter = (props) => {
   const { setView, wrongAnswer, round, hard } = props ;
   //ten seconds is counted before the question is skipped on easy
 
-  const [counter, setCounter] = React.useState(hard?23:11);
+  const [counter, setCounter] = React.useState(hard ? 23 : 11);
 
   const [thumbs, setThumbs] = React.useState(
     [
@@ -52,23 +52,6 @@ const Counter = (props) => {
       <Thumb key={8} />,
     ])
 
-  if(hard){
-    setThumbs([
-      <ThumbHard key={0} />,
-      <ThumbHard key={1} />,
-      <ThumbHard key={2} />,
-      <ThumbHard key={3} />,
-      <ThumbHard key={4} />,
-      <ThumbHard key={5} />,
-      <ThumbHard key={6} />,
-      <ThumbHard key={7} />,
-      <ThumbHard key={8} />,
-      <ThumbHard key={9} />,
-      <ThumbHard key={10} />,
-    ])
-  }
-
-
   React.useEffect(() => {
     if (counter <= 1 && round === 3) {
       wrongAnswer();
@@ -81,6 +64,7 @@ const Counter = (props) => {
   React.useEffect(() => {
     const timer = setInterval(() => {
         setCounter(counter - 1);
+        console.log(counter)
         if(hard){
           if (counter % 4 === 0) {
             setThumbs(thumbs.slice(0, thumbs.length - 2));
@@ -90,8 +74,6 @@ const Counter = (props) => {
             setThumbs(thumbs.slice(0, thumbs.length - 2));
           }
         }
-
-
       }, 1000);
 
     return () => clearInterval(timer);

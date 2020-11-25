@@ -161,8 +161,8 @@ function App() {
     return array;
   }
 
-  const handleFreeAnswer= (answer) => {
-
+  const handleFreeAnswer = (answer) => {
+    randomAnswers.sp
   }
 
   const correctAnswer = () => {
@@ -171,7 +171,7 @@ function App() {
     setTimeout(() => {
       setBank(bank + questionValue);
     }, 200);
-    reduceWrongAnswers()
+    shuffleWrongAnswers()
     if (round===3){
       setView('win')
     }else{
@@ -185,7 +185,7 @@ function App() {
     setTimeout(() => {
       setBank(bank - questionValue);
     }, 200);
-    reduceWrongAnswers()
+    shuffleWrongAnswers()
     if (round === 3 && bank - questionValue <= 0) {
       setView('gameOver')
     } else if(round === 3) {
@@ -195,7 +195,7 @@ function App() {
     }
   };
 
-  const reduceWrongAnswers = () =>{
+  const shuffleWrongAnswers = () =>{
     setRandomAnswers((prevAnswers)=>{
       shuffleArray(prevAnswers)
       return [...prevAnswers]
@@ -216,8 +216,7 @@ function App() {
     )
 
     if (view === 'question'){
-      // console.log('column', col,'row', row)
-      // console.log("clue",board[round - 1][col].clues[row])
+
       return (
         <QuestionCard
         round={round}
@@ -229,6 +228,7 @@ function App() {
         wrongAnswer={wrongAnswer}
         randomAnswers={[randomAnswers[randomAnswers.length - 1], randomAnswers[randomAnswers.length-2]]}
         hard={hard}
+        handleFreeAnswer={handleFreeAnswer}
       />
     )}
     if (view==='dailyDouble'){
@@ -276,7 +276,7 @@ function App() {
           <audio id="wrong-sound" src={wrongNotification}></audio>
           <audio id="daily-double" src={DailyDouble}></audio>
         </>
-        <Header bank={bank} setBank={setBank} />
+        {view!=='landing' && <Header bank={bank} setBank={setBank} />}
         {renderMain()}
       </div>
     </div>

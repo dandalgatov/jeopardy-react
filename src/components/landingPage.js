@@ -95,14 +95,14 @@ export default function LandingPage(props) {
             <RadioGroup row aria-label="difficulty" name="difficulty" defaultValue="easy">
               <FormControlLabel
                 value="easy"
-                control={<Radio color='#FFFFFF' />}
+                control={<Radio style={{color:'#FFFFFF'}} />}
                 label={<Typography className={classes.bigFont}>Easy</Typography>}
                 classes={classes.bigFont}
                 onClick={()=>props.setHard(false)}
               />
               <FormControlLabel
               value="hard"
-              control={<Radio color='#FFFFFF' />}
+                control={<Radio style={{ color: '#FFFFFF' }} />}
                 label={<Typography className={classes.bigFont}>Hard</Typography>}
               onClick={() => props.setHard(true)}
                  />

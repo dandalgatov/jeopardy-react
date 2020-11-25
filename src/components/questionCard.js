@@ -54,14 +54,24 @@ const useStyles = makeStyles((theme) => ({
   bigFont: {
     fontSize: '1.4rem'
   },
+  freeAnswer: {
+    width: '50%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    "-webkit-text-stroke": "0px black",
+    alignItems:'center'
+  }
 }));
 
 
 const QuestionCard = (props) => {
   const { clue, correctAnswer, wrongAnswer, randomAnswers, shuffleArray, setView, round, hard} = props || "";
   const classes = useStyles();
+  const [freeAnswer, setFreeAnswer] = React.useState("")
 
+  const submitFreeAnswer = () => {
 
+  }
   // eslint-disable-next-line
   const [answers, setAnswers] = React.useState(shuffleArray([
     <Button  className = {classes.answer} key={1} onClick={correctAnswer} variant="contained">
@@ -76,17 +86,16 @@ const QuestionCard = (props) => {
   ])
 )
 
-  const freeAnswer = (
+  const freeAnswerForm = (
     <>
-      <form>
-        <TextField label="Your Answer" variant="outlined"
-          InputProps={{
-            classes: {
-              input: classes.bigFont,
-            },
-          }}
+      <form className={classes.freeAnswer} onSubmit={}>
+        <TextField
+          placeholder=" Answer"
+          style={{color: 'black',backgroundColor:'white'}}
+          value={freeAnswer}
+          change={event=>setFreeAnswer(event.target.value)}
         />
-        <Button> Submit </Button>
+        <Button style={{color:'black', backgroundColor:'white'}}> Submit </Button>
       </form>
     </>)
 
@@ -102,7 +111,7 @@ const QuestionCard = (props) => {
         className={classes.answerRow}
       >
         {!hard && answers}
-        {hard && freeAnswer}
+        {hard && freeAnswerForm}
       </div>
     </Box>
   );
