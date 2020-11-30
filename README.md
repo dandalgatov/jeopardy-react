@@ -59,6 +59,10 @@ Features
 
 - As a user, after the third round I am shown my score and asked if I want to play again
 
+Post Competition Features
+========
+- Hard Mode
+
 Development
 ======
 
@@ -67,13 +71,14 @@ System Requirements
 
 - Node.js 10 or higher
 
-- npm 6 or higher
+- yarn
 
 Technologies Used
 ------
 - React
 - Material UI
 - Axios
+- JService.io
 
 ### Getting Started
 
@@ -87,11 +92,11 @@ cd quiz-platform-dmm
 2. Install dependencies with NPM
 
 ```shell
-npm install
+yarn install
 ```
 
 3. Start the project.  It can be view at [http://localhost:3000/](http://localhost:3000/) in the browser
 
 ```shell
-npm run start
+yarn start
 ```
