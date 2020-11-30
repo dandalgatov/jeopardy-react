@@ -52,7 +52,9 @@ const useStyles = makeStyles(theme => ({
       "-webkit-text-stroke": '1px black',
 }
   },
-
+  bigFont: {
+    fontSize: '1.4rem'
+  },
 
 }))
 
