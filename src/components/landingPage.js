@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
   alex:{
     objectFit:'contain',
-    maxHeight: "70vh",
+    maxHeight: "60vh",
   },
   title: {
     marginTop: '5vh',
