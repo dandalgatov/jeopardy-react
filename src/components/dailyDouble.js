@@ -4,6 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   main: {
+    [theme.breakpoints.down('sm')]: {
+      height: '100%'
+    },
     fontFamily: 'KorinnaBold',
     alignItems: 'center',
     justifyContent: "center",
@@ -42,7 +45,7 @@ export default function DailyDouble(props) {
       setView('wager')
     }
     setDailyTimer(dailyTimer - 1)
-    
+
   }
 
   return (

@@ -12,11 +12,11 @@ import maxBetService from './services/maxBet'
 import correctNotification from "./public/audio/rightanswer.mp3";
 import wrongNotification from "./public/audio/wrong-answer.mp3";
 import EndGame from './components/endGame'
-
+import DailyDouble from './public/audio/daily-double.mp3';
 
 function App() {
   const [board, setBoard] = useState()
-  const [boardOffset, setBoardOffset] = useState(1)
+  const [boardOffset, setBoardOffset] = useState(Math.random() * 1000)
   const [view, setView] = useState('landing')
   const [round, setRound] = useState(1)
   const [col, setColumn] = useState()
@@ -36,15 +36,16 @@ function App() {
   const [roundTimer, setRoundTimer] = useState(-1)
   const [maxBet, setMaxBet] = useState(0);
   const [questionCounter, setQuestionCounter] = useState(0)
-  const roundLength = 60;
+  const [hard, setHard]= useState(false);
+  const [roundLength, setRoundLength] = useState(150); //time of round 1 and 2 in seconds
 
 
   const setEndView = useCallback(() => {
     if (bank > 0) {
-      setRound(3)
       setColumn(0)
       setRow(4)
       setView("finalRound")
+      setRound(3)
     }
     else {
       setView("gameOver")
@@ -55,7 +56,7 @@ function App() {
     if (round === 1) {
       setDailyDouble([[Math.floor(Math.random() * 6), Math.floor(Math.random() * 5)], [Math.floor(Math.random() * 6), Math.floor(Math.random() * 5)]])
       setView("secondRound")
-      setRoundTimer(roundLength)//time second round
+      setRoundTimer(roundLength)
       setRound(2)
       setQuestionCounter(0)
       setHistory([
@@ -75,15 +76,9 @@ function App() {
       setEndView()
     }
     }
-  }, [round, setEndView])
+  }, [round, setEndView, roundLength])
 
-
-  useEffect(() => {
-    if(questionCounter===30){
-      nextRound()
-    }
-  },[questionCounter, nextRound]);
-
+  //gets new answers and questions when the board is set
   useEffect(() => {
     createBoard(setBoard, boardOffset);
     async function getWrongAnswers() {
@@ -92,9 +87,16 @@ function App() {
     getWrongAnswers();
   }, [boardOffset]);
 
+  //progresses next round when all questions on grid are answered
+  useEffect(() => {
+    if(questionCounter===30){
+      nextRound()
+    }
+  },[questionCounter, nextRound]);
+
+  //counts down the round timer
   useEffect(()=>{
     const countdown = setInterval(()=>{
-
 
       setRoundTimer(roundTimer-1)
       if(roundTimer===0){
@@ -104,9 +106,15 @@ function App() {
     },1000)
     return ()=>clearInterval(countdown);
   })
-
-
-
+//more time allocated for hard difficulty
+  useEffect(()=>{
+    if(hard){
+      setRoundLength(180)
+    } else{
+      setRoundLength(150)
+    }
+  },[hard])
+  //handles what happens when a question is selected from the grid
   const itemClick = (col, row, value) => {
     setColumn(col)
     setRow(row)
@@ -124,6 +132,7 @@ function App() {
     }
   }
 
+  //if the user clicks the play again button at the end
   const reset = () => {
     setBoardOffset(boardOffset + 13)
     createBoard(setBoard, boardOffset + 13);
@@ -143,6 +152,7 @@ function App() {
     ]);
   }
 
+  //shuffles random answers on easy
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -151,13 +161,24 @@ function App() {
     return array;
   }
 
+  const handleFreeAnswer = (answer) => {
+    const trueAnswer = board[round - 1][col].clues[row].answer.toLowerCase();
+    const answers = answer.toLowerCase().split(/[ -]+/)
+    for( let i=0; i<answers.length; i++){
+      if (trueAnswer.includes(answers[i])){
+        return correctAnswer();
+      }
+    }
+    return wrongAnswer();
+  }
+
   const correctAnswer = () => {
     document.getElementById("correct-sound").play();
     setQuestionCounter(questionCounter + 1)
     setTimeout(() => {
       setBank(bank + questionValue);
-    }, 500);
-    reduceWrongAnswers()
+    }, 200);
+    shuffleWrongAnswers()
     if (round===3){
       setView('win')
     }else{
@@ -170,8 +191,8 @@ function App() {
     setQuestionCounter(questionCounter+1)
     setTimeout(() => {
       setBank(bank - questionValue);
-    }, 500);
-    reduceWrongAnswers()
+    }, 200);
+    shuffleWrongAnswers()
     if (round === 3 && bank - questionValue <= 0) {
       setView('gameOver')
     } else if(round === 3) {
@@ -181,16 +202,16 @@ function App() {
     }
   };
 
-  const reduceWrongAnswers = () =>{
+  const shuffleWrongAnswers = () =>{
     setRandomAnswers((prevAnswers)=>{
-      prevAnswers.pop()
+      shuffleArray(prevAnswers)
       return [...prevAnswers]
     })
   }
 
   const renderMain = () => {
     if (view === "landing") {
-      return <LandingPage setView={setView} start={() => setRoundTimer(roundLength)}/>;
+      return <LandingPage setHard={setHard} setView={setView} start={() => setRoundTimer(roundLength)}/>;
     }
 
     if (view === 'grid') return (
@@ -202,6 +223,7 @@ function App() {
     )
 
     if (view === 'question'){
+
       return (
         <QuestionCard
         round={round}
@@ -212,11 +234,17 @@ function App() {
         shuffleArray={shuffleArray}
         wrongAnswer={wrongAnswer}
         randomAnswers={[randomAnswers[randomAnswers.length - 1], randomAnswers[randomAnswers.length-2]]}
+        hard={hard}
+        handleFreeAnswer={handleFreeAnswer}
       />
     )}
-    if (view==='dailyDouble') return (
+    if (view==='dailyDouble'){
+      const dailyDoubleSound = document.getElementById("daily-double")
+      dailyDoubleSound.volume=.3
+      dailyDoubleSound.play()
+       return (
       <AnnouncementPage text="Daily Double!" setView={setView} next='wager' time={2}/>
-    )
+    )}
     if (view === 'secondRound') return (
       <AnnouncementPage text="Double Jeopardy!" setView={setView} next='grid' time={2} />
     )
@@ -249,17 +277,13 @@ function App() {
     <div className="App ">
       <div
         className="gradient-background"
-        style={{
-          display: "flex",
-          flexFlow: "column nowrap",
-          alignContent: "flex-end",
-        }}
       >
         <>
           <audio id="correct-sound" src={correctNotification}></audio>
           <audio id="wrong-sound" src={wrongNotification}></audio>
+          <audio id="daily-double" src={DailyDouble}></audio>
         </>
-        <Header bank={bank} setBank={setBank} />
+        {view !== 'landing' && view !== 'gameOver' && view !== 'win' && <Header bank={bank} setBank={setBank} />}
         {renderMain()}
       </div>
     </div>

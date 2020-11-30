@@ -59,6 +59,7 @@ code {
     min-height: 100vh;
     -webkit-animation: gradientBackground 10s ease infinite;
     animation: gradientBackground 10s ease infinite;
+    overflow:hidden;
 }
 
 @-webkit-keyframes gradientBackground {
