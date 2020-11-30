@@ -22,6 +22,9 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         color: '#FFFFFF',
         fontWeight: '900',
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: '9vh',
+        },
     },
 
 

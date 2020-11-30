@@ -22,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
     height: "80vh"
   },
   statement: {
-    width: "80%",
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+    },
     margin: 'auto'
   },
   button: {

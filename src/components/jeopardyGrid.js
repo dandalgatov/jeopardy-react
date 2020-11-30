@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('sm')]: {
     main:{
-      paddingTop: '7vh',
+      paddingTop: '9vh',
     }
   },
 }));

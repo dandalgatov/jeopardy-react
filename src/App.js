@@ -42,10 +42,10 @@ function App() {
 
   const setEndView = useCallback(() => {
     if (bank > 0) {
-      setRound(3)
       setColumn(0)
       setRow(4)
       setView("finalRound")
+      setRound(3)
     }
     else {
       setView("gameOver")
@@ -162,7 +162,14 @@ function App() {
   }
 
   const handleFreeAnswer = (answer) => {
-    randomAnswers.sp
+    const trueAnswer = board[round - 1][col].clues[row].answer.toLowerCase();
+    const answers = answer.toLowerCase().split(/[ -]+/)
+    for( let i=0; i<answers.length; i++){
+      if (trueAnswer.includes(answers[i])){
+        return correctAnswer();
+      }
+    }
+    return wrongAnswer();
   }
 
   const correctAnswer = () => {
@@ -276,7 +283,7 @@ function App() {
           <audio id="wrong-sound" src={wrongNotification}></audio>
           <audio id="daily-double" src={DailyDouble}></audio>
         </>
-        {view!=='landing' && <Header bank={bank} setBank={setBank} />}
+        {view !== 'landing' && view !== 'gameOver' && view !== 'win' && <Header bank={bank} setBank={setBank} />}
         {renderMain()}
       </div>
     </div>

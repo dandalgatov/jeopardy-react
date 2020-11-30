@@ -20,7 +20,7 @@
 
 @media only screen and (max-width: 700px) {
   .header {
-  height: 7vh;
+  height: 9vh;
   background:inherit;
   font-size: 2rem;
   position:fixed;

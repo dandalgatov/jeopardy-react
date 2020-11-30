@@ -6,7 +6,7 @@ import Counter from "./Counter";
 const useStyles = makeStyles((theme) => ({
   main: {
     [theme.breakpoints.down('sm')]: {
-        paddingTop: '7vh',
+        paddingTop: '10vh',
     },
     fontFamily: "KorinnaBold",
     alignItems: "center",
@@ -23,13 +23,14 @@ const useStyles = makeStyles((theme) => ({
   question: {
     height: "60vh",
     [theme.breakpoints.down('md')]: {
-      height: "50vh",
+      height: "55vh",
+      fontSize: '.8rem'
     },
     width: "80%",
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
-    flexFlow: "column nowrap",
+    flexFlow: "column wrap",
   },
   answerRow: {
     height: "24vh",
@@ -38,13 +39,19 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-around",
     alignItems: "center",
     [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      height: "40vh",
+      height: "30vh",
     },
   },
   answer:{
     [theme.breakpoints.down('md')]: {
-      margin: '0 1rem'
+      margin: '0 .5rem',
+      padding: '0 5px',
+
+    },
+  },
+  answerText: {
+    [theme.breakpoints.down('md')]: {
+      padding: '0 0',
     },
   },
   countdown: {
@@ -55,7 +62,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.4rem'
   },
   freeAnswer: {
-    width: '50%',
+    [theme.breakpoints.up('md')]: {
+      width: '50%',
+    },
     display: 'flex',
     justifyContent: 'space-around',
     "-webkit-text-stroke": "0px black",
@@ -65,37 +74,42 @@ const useStyles = makeStyles((theme) => ({
 
 
 const QuestionCard = (props) => {
-  const { clue, correctAnswer, wrongAnswer, randomAnswers, shuffleArray, setView, round, hard} = props || "";
+  const { clue, correctAnswer, wrongAnswer, randomAnswers, shuffleArray, setView, round, hard, handleFreeAnswer} = props || "";
   const classes = useStyles();
+
   const [freeAnswer, setFreeAnswer] = React.useState("")
-
-  const submitFreeAnswer = () => {
-
-  }
+  console.log(clue.answer)
   // eslint-disable-next-line
   const [answers, setAnswers] = React.useState(shuffleArray([
     <Button  className = {classes.answer} key={1} onClick={correctAnswer} variant="contained">
-      <h3 dangerouslySetInnerHTML={{__html: clue.answer}}/>
+      <p className={classes.answerText} dangerouslySetInnerHTML={{__html: clue.answer}}/>
     </Button>,
     <Button className={classes.answer} key={2} onClick={wrongAnswer} variant="contained">
-      <h3 dangerouslySetInnerHTML={{__html: randomAnswers && randomAnswers[0]}}/>
+      <p className={classes.answerText} dangerouslySetInnerHTML={{__html: randomAnswers && randomAnswers[0]}}/>
     </Button>,
     <Button className={classes.answer} key={3} onClick={wrongAnswer} variant="contained">
-      <h3 dangerouslySetInnerHTML={{__html: randomAnswers[1]}}/>
+      <p className={classes.answerText} dangerouslySetInnerHTML={{__html: randomAnswers[1]}}/>
     </Button>,
   ])
 )
 
   const freeAnswerForm = (
     <>
-      <form className={classes.freeAnswer} onSubmit={}>
-        <TextField
-          placeholder=" Answer"
-          style={{color: 'black',backgroundColor:'white'}}
-          value={freeAnswer}
-          change={event=>setFreeAnswer(event.target.value)}
-        />
-        <Button style={{color:'black', backgroundColor:'white'}}> Submit </Button>
+      <form className={classes.freeAnswer} onSubmit={() => {handleFreeAnswer(freeAnswer)}}>
+        <div>
+          <h3>What is </h3>
+          <TextField
+            placeholder=" Answer"
+            style={{ color: 'black', backgroundColor: 'white' }}
+            value={freeAnswer}
+            onChange={event => setFreeAnswer(event.target.value)}
+          />
+        </div>
+
+        <Button
+          style={{color:'black', backgroundColor:'white', margin:"5px"}}
+          onClick={() => handleFreeAnswer(freeAnswer)}
+        > Submit </Button>
       </form>
     </>)
 
