@@ -85,7 +85,7 @@ const QuestionCard = (props) => {
       <p className={classes.answerText} dangerouslySetInnerHTML={{__html: clue.answer}}/>
     </Button>,
     <Button className={classes.answer} key={2} onClick={wrongAnswer} variant="contained">
-      <p className={classes.answerText} dangerouslySetInnerHTML={{__html: randomAnswers && randomAnswers[0]}}/>
+      <p className={classes.answerText} dangerouslySetInnerHTML={{__html: randomAnswers[0]}}/>
     </Button>,
     <Button className={classes.answer} key={3} onClick={wrongAnswer} variant="contained">
       <p className={classes.answerText} dangerouslySetInnerHTML={{__html: randomAnswers[1]}}/>
