@@ -13,7 +13,7 @@ Participants
 
 Live Demo
 ======
-[https://jeopardy-fan-edition.vercel.app/](https://jeopardy-fan-edition.vercel.app/)
+[https://jeopardy.david-diep.com](https://jeopardy.david-diep.com)
 
 Personal Contributions
 ======
