@@ -39,7 +39,7 @@ const Counter = (props) => {
 
   const [counter, setCounter] = React.useState(hard ? 23 : 11);
 
-  const [thumbs, setThumbs] = React.useState(
+  const [thumbs, setThumbs] = React.useState(!hard ?
     [
       <Thumb key={0} />,
       <Thumb key={1} />,
@@ -50,6 +50,19 @@ const Counter = (props) => {
       <Thumb key={6} />,
       <Thumb key={7} />,
       <Thumb key={8} />,
+    ]:
+    [
+      <ThumbHard key={0} />,
+      <ThumbHard key={1} />,
+      <ThumbHard key={2} />,
+      <ThumbHard key={3} />,
+      <ThumbHard key={4} />,
+      <ThumbHard key={5} />,
+      <ThumbHard key={6} />,
+      <ThumbHard key={7} />,
+      <ThumbHard key={8} />,
+      <ThumbHard key={9} />,
+      <ThumbHard key={10} />,
     ])
 
   React.useEffect(() => {
@@ -64,7 +77,6 @@ const Counter = (props) => {
   React.useEffect(() => {
     const timer = setInterval(() => {
         setCounter(counter - 1);
-        console.log(counter)
         if(hard){
           if (counter % 4 === 0) {
             setThumbs(thumbs.slice(0, thumbs.length - 2));

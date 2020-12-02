@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
         color: '#FFFFFF',
         fontWeight: '900',
         [theme.breakpoints.down('sm')]: {
-            paddingTop: '9vh',
+            marginTop: '9vh',
         },
     },
 

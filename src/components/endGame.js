@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const EndCard = (props) => {
-  const { mode, score, setView, reset } = props;
+  const { mode, score, setView, reset, sound } = props;
 
   const classes = useStyles();
 
@@ -68,9 +68,11 @@ const EndCard = (props) => {
   }
 
   React.useEffect(() => {
-    var audio = document.getElementById('jeopardy-music')
-    audio.volume = .3
-    audio.play()
+    if (sound==="on") {
+      var audio = document.getElementById('jeopardy-music')
+      audio.volume = .3
+      audio.play()
+    }
   }, [])
 
 
