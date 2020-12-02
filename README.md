@@ -1,7 +1,7 @@
 Jeopardy! Fan Edition
 =======
 
-A hackathon complete for the [MintBean Quiz Platform Hackathon](https://sites.google.com/mintbean.io/mbjavascripthackshackthequizpl/home)
+1st place hackathon entry for the [MintBean Quiz Platform Hackathon](https://sites.google.com/mintbean.io/mbjavascripthackshackthequizpl/home)
 
 Participants
 ------
