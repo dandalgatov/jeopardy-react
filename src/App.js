@@ -37,6 +37,7 @@ function App() {
   const [maxBet, setMaxBet] = useState(0);
   const [questionCounter, setQuestionCounter] = useState(0)
   const [hard, setHard]= useState(false);
+  const [sound, setSound] = useState("off");
   const [roundLength, setRoundLength] = useState(150); //time of round 1 and 2 in seconds
 
 
@@ -173,7 +174,9 @@ function App() {
   }
 
   const correctAnswer = () => {
-    document.getElementById("correct-sound").play();
+    if(sound==="on"){
+      document.getElementById("correct-sound").play();
+    }
     setQuestionCounter(questionCounter + 1)
     setTimeout(() => {
       setBank(bank + questionValue);
@@ -187,7 +190,9 @@ function App() {
   };
 
   const wrongAnswer = () => {
-    document.getElementById("wrong-sound").play();
+    if (sound === "on"){
+      document.getElementById("wrong-sound").play();
+    }
     setQuestionCounter(questionCounter+1)
     setTimeout(() => {
       setBank(bank - questionValue);
@@ -211,7 +216,12 @@ function App() {
 
   const renderMain = () => {
     if (view === "landing") {
-      return <LandingPage setHard={setHard} setView={setView} start={() => setRoundTimer(roundLength)}/>;
+      return <LandingPage
+        setHard={setHard}
+        setView={setView}
+        setSound={setSound}
+        sound={sound}
+        start={() => setRoundTimer(roundLength)}/>;
     }
 
     if (view === 'grid') return (
@@ -239,9 +249,11 @@ function App() {
       />
     )}
     if (view==='dailyDouble'){
-      const dailyDoubleSound = document.getElementById("daily-double")
-      dailyDoubleSound.volume=.3
-      dailyDoubleSound.play()
+      if (sound === "on"){
+        const dailyDoubleSound = document.getElementById("daily-double")
+        dailyDoubleSound.volume = .3
+        dailyDoubleSound.play()
+      }
        return (
       <AnnouncementPage text="Daily Double!" setView={setView} next='wager' time={2}/>
     )}
@@ -261,12 +273,12 @@ function App() {
     )
     if(view ==="gameOver") return (
       <>
-        <EndGame mode="fail" setView={setView} reset={reset}/>
+        <EndGame sound={sound} mode="fail" setView={setView} reset={reset}/>
       </>
     )
     if (view === "win") return (
       <>
-        <EndGame setView={setView} score={bank} reset={reset} />
+        <EndGame sound={sound} setView={setView} score={bank} reset={reset} />
       </>
     )
   }

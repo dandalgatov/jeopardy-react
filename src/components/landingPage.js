@@ -60,25 +60,28 @@ const useStyles = makeStyles(theme => ({
 
 export default function LandingPage(props) {
   const classes = useStyles();
+  let audio = document.getElementById('jeopardy-intro')
 
   const play = () => {
-    const audio = document.getElementById('jeopardy-intro')
-    audio.volume = .3
+    audio.volume=.3
     audio.play()
   }
 
   React.useEffect(()=>{
-    play()
+    audio = document.getElementById('jeopardy-intro')
+    if (props.sound === "on"){
+      play()
+    }
   },[])
 
   return (
     <Box className={`${classes.main}`} >
         <audio id="jeopardy-intro" src={jeopardyIntro}></audio>
-        <Box onClick={play} className={`${classes.title} logo`} >
+        <Box className={`${classes.title} logo`} >
           <h1>Jeopardy!</h1>
         </Box>
       <Grid container className={classes.bottomRow} >
-        <Grid onClick={play} item md={4} sm={12} className={classes.imageContainer}>
+        <Grid item md={4} sm={12} className={classes.imageContainer}>
           <h3><i>Remembering Alex Trebek.</i></h3>
           <img className={classes.alex} src={alexTrebek} alt='Alex Trebek'></img>
         </Grid>
@@ -99,7 +102,6 @@ export default function LandingPage(props) {
                 value="easy"
                 control={<Radio style={{color:'#FFFFFF'}} />}
                 label={<Typography className={classes.bigFont}>Easy</Typography>}
-                classes={classes.bigFont}
                 onClick={()=>props.setHard(false)}
               />
               <FormControlLabel
@@ -108,6 +110,24 @@ export default function LandingPage(props) {
                 label={<Typography className={classes.bigFont}>Hard</Typography>}
               onClick={() => props.setHard(true)}
                  />
+            </RadioGroup>
+          </FormControl>
+          <br></br>
+          <FormControl >
+            <h2>Sound</h2>
+            <RadioGroup row aria-label="difficulty" name="difficulty" value={props.sound}>
+              <FormControlLabel
+                value="off"
+                control={<Radio style={{ color: '#FFFFFF' }} />}
+                label={<Typography className={classes.bigFont}>Off</Typography>}
+                onClick={() => {props.setSound("off"); audio.pause()}}
+              />
+              <FormControlLabel
+                value="on"
+                control={<Radio style={{ color: '#FFFFFF' }} />}
+                label={<Typography className={classes.bigFont}>On</Typography>}
+                onClick={() => {props.setSound("on"); play()}}
+              />
             </RadioGroup>
           </FormControl>
           <br></br>

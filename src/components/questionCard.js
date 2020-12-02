@@ -78,7 +78,6 @@ const QuestionCard = (props) => {
   const classes = useStyles();
 
   const [freeAnswer, setFreeAnswer] = React.useState("")
-  console.log(clue.answer)
   // eslint-disable-next-line
   const [answers, setAnswers] = React.useState(shuffleArray([
     <Button  className = {classes.answer} key={1} onClick={correctAnswer} variant="contained">
