@@ -38,7 +38,7 @@ function App() {
   const [questionCounter, setQuestionCounter] = useState(0)
   const [hard, setHard]= useState(false);
   const [sound, setSound] = useState("off");
-  const [roundLength, setRoundLength] = useState(150); //time of round 1 and 2 in seconds
+  const [roundLength, setRoundLength] = useState(160); //time of round 1 and 2 in seconds
 
 
   const setEndView = useCallback(() => {
@@ -110,9 +110,9 @@ function App() {
 //more time allocated for hard difficulty
   useEffect(()=>{
     if(hard){
-      setRoundLength(180)
+      setRoundLength(200)
     } else{
-      setRoundLength(150)
+      setRoundLength(160)
     }
   },[hard])
   //handles what happens when a question is selected from the grid
