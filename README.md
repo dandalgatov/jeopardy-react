@@ -62,6 +62,7 @@ Features
 Post Competition Features
 ========
 - Hard Mode
+- Sound Option
 
 Development
 ======
