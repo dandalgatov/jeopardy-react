@@ -69,9 +69,6 @@ Development
 
 System Requirements
 ------
-
-- Node.js 10 or higher
-
 - yarn
 
 Technologies Used
@@ -87,8 +84,8 @@ Technologies Used
 1. Clone this repository
 
 ```shell
-git clone https://github.com/mhallaq/quiz-platform-ddm
-cd quiz-platform-dmm
+git clone https://github.com/david-diep/jeopardy-react.git
+cd jeopardy-react
 ```
 2. Install dependencies with yarn
 
