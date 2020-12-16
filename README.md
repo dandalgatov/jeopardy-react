@@ -25,6 +25,11 @@ Personal Contributions
 - Transition Screens (Double Jeopardy, Final Jeopardy, Game Over)
 - Mobile Responsiveness
 
+Post Competition Features
+========
+- Hard Mode
+- Sound Option
+
 Features
 =======
 - As a user, When the page loads a landing page asking if I want to play
@@ -59,11 +64,6 @@ Features
 
 - As a user, after the third round I am shown my score and asked if I want to play again
 
-Post Competition Features
-========
-- Hard Mode
-- Sound Option
-
 Development
 ======
 
@@ -90,7 +90,7 @@ Technologies Used
 git clone https://github.com/mhallaq/quiz-platform-ddm
 cd quiz-platform-dmm
 ```
-2. Install dependencies with NPM
+2. Install dependencies with yarn
 
 ```shell
 yarn install
